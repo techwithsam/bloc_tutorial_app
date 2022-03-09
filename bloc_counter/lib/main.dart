@@ -33,14 +33,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,10 +41,25 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            BlocBuilder<CounterCubit, CounterState>(
+            const Text('You have pushed the button this many times:'),
+            BlocConsumer<CounterCubit, CounterState>(
+              listener: (context, state) {
+                if (state.wasIncremented == true) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Incremented'),
+                      duration: Duration(milliseconds: 300),
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Decremented'),
+                      duration: Duration(milliseconds: 300),
+                    ),
+                  );
+                }
+              },
               builder: (context, state) {
                 if (state.counterValue < 0) {
                   return Text(
@@ -61,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   );
                 } else if (state.counterValue % 2 == 0) {
                   return Text(
-                    'YAAAAY ${state.counterValue}',
+                    'YAWATA ${state.counterValue}',
                     style: Theme.of(context).textTheme.headline4,
                   );
                 } else if (state.counterValue == 5) {
