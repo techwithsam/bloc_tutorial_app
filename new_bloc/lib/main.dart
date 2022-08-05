@@ -18,8 +18,6 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key, required this.appRouter, required this.connectivity})
       : super(key: key);
 
-  // final CounterCubit _counterCubit = CounterCubit();
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -28,9 +26,7 @@ class MyApp extends StatelessWidget {
           create: (_) => InternetCubit(connectivity: connectivity),
         ),
         BlocProvider<CounterCubit>(
-          create: (_) => CounterCubit(
-            internetCubit: BlocProvider.of<InternetCubit>(context),
-          ),
+          create: (_) => CounterCubit(),
         ),
       ],
       child: MaterialApp(

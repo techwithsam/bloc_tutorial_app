@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,17 +15,15 @@ class InternetCubit extends Cubit<InternetState> {
 
   StreamSubscription<ConnectivityResult> monitorInternetConnection() {
     return connectivityStreamSubscription =
-        connectivity.onConnectivityChanged.listen(
-      (event) {
-        if (event == ConnectivityResult.wifi) {
-          emitInternetConnected(ConnectionType.Wifi);
-        } else if (event == ConnectivityResult.mobile) {
-          emitInternetConnected(ConnectionType.Mobile);
-        } else if (event == ConnectivityResult.none) {
-          emitInternetDisconnected();
-        }
-      },
-    );
+        connectivity.onConnectivityChanged.listen((event) {
+      if (event == ConnectivityResult.wifi) {
+        emitInternetConnected(ConnectionType.Wifi);
+      } else if (event == ConnectivityResult.mobile) {
+        emitInternetConnected(ConnectionType.Mobile);
+      } else if (event == ConnectivityResult.none) {
+        emitInternetDisconnected();
+      }
+    });
   }
 
   void emitInternetConnected(ConnectionType _connectionType) =>
